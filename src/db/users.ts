@@ -1,5 +1,19 @@
 import mongoose from "mongoose";
 
+export interface IUser {
+    _id: mongoose.Types.ObjectId;
+  username: string;
+  firstName: string;
+  secondName: string;
+    email: string;
+    authentication: {
+        password: string;
+        salt: string;
+        sessionToken?: string;
+    };
+    isAdmin?: boolean;
+}
+
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -25,9 +39,12 @@ const userSchema = new mongoose.Schema({
         },
         sessionToken: {type: String}
     },
-    
+    isAdmin: {
+        type: Boolean,
+        default: false
+    }, 
 });
-const UserModel = mongoose.model('User', userSchema);
+const UserModel = mongoose.model<IUser>('User', userSchema);
 export default UserModel
 
 export const getUsers = () => UserModel.find();

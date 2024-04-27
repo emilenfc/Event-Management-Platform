@@ -28,11 +28,18 @@ export const deleteUser = async (req: express.Request, res: express.Response) =>
 export const updateUser = async (req: express.Request, res: express.Response) => {
     try {
         const { id } = req.params;
-        const updatedUser = await updateUserById(id, req.body);
-        await updatedUser.save();
-        return res.status(200).json({message: "user updated successfully", user: updatedUser }); 
-    } catch(error) {
-        console.log(error)
-         return (res.status(500)).json({ message: "Server error", status: 500 });
+        const { isAdmin } = req.body; 
+
+        if (isAdmin === true) {
+            // Update the user to be an admin
+            const updatedUser = await updateUserById(id, { isAdmin: true });
+            return res.status(200).json({ message: "User updated successfully", user: updatedUser });
+        } else {
+            const updatedUser = await updateUserById(id, req.body);
+            return res.status(200).json({ message: "User updated successfully", user: updatedUser });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Server error", status: 500 });
     }
 }

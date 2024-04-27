@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const eventSchema = new mongoose.Schema({
     title: {
         type: String,
+        unique: true,
         required: true
     },
     description: {
@@ -19,6 +20,7 @@ const eventSchema = new mongoose.Schema({
     creator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required: true
     },
 
     price: {
@@ -31,12 +33,6 @@ const eventSchema = new mongoose.Schema({
     image: {
         type: String
     },
-    bookings: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Booking'
-        }
-    ],
     createdAt: {
         type: Date,
         default: Date.now

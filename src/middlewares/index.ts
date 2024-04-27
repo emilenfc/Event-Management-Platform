@@ -39,3 +39,12 @@ export const isOwner = async (req: express.Request, res: express.Response, next:
     }
 
 }
+
+export const isAdmin = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const user = get(req, "identity") as any;
+
+  if (!user || !user.isAdmin) {
+    return res.status(403).json({ message: 'Unauthorized: Admin access required' });
+  }
+  next();
+};

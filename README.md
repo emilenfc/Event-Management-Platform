@@ -33,10 +33,10 @@ This project is an API for managing events. It provides endpoints for creating, 
  PORT=8000
  MONGODB_URI=
  SECRET=
- 
- 5. Start the server:
+
+5. Start the server:
  ```
-npm start
+ npm start
 
 
 

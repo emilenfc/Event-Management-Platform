@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 const LoginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
+    email: z.string().email({ message: 'valid email required' }),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
 const RegisterSchema = z.object({

@@ -6,12 +6,20 @@ const LoginSchema = z.object({
 });
 
 const RegisterSchema = z.object({
-    firstname: z.string(),
-    secondName: z.string(),
-    email: z.string().email(),
-    password: z.string().min(6),
-    confirmPassword: z.string().min(6),
-});
+    firstName: z.string().min(2, 'Firstname required'),
+    secondName: z.string().min(2, 'Secondname required'),
+    email: z.string().email({ message: 'valid email required' }),
+    password: z.string().min(4,'Password must be atleast 4 chracter'),
+    confirmPassword: z.string().min(4),
+}).superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+        ctx.addIssue({
+            code: "custom",
+            message: "The passwords did not match",
+            path: ["confirmPassword"],
+        });
+    };
+})
 
 const BookingSchema = z.object({
     numberOfTickets: z.number().min(1),

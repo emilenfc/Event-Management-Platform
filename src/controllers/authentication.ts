@@ -52,7 +52,7 @@ export const register = async(req: express.Request, res: express.Response) => {
             }
         });
 
-        return res.status(200).json(user).end()
+        return res.status(200).json({message: "Account created successfully",status: 200,user}).end()
     } catch (error) {
         console.log("error during registration", error)
         return (res.status(400)).json({ message: "Something went wrong", status: 400 }).end()
